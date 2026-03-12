@@ -3,48 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infantselva & Jerline | Wedding Invite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&family=Montserrat:wght@200;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <title>The Union of Infantselva & Jerline | May 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark: #1a1a1a; --soft-white: #fdfcf9; }
-        body { margin: 0; background: var(--soft-white); font-family: 'Cormorant Garamond', serif; color: var(--dark); overflow-x: hidden; }
-        .wrapper { max-width: 600px; margin: 0 auto; padding: 60px 20px; text-align: center; border: 1px solid #eee; background: white; min-height: 100vh; }
+        :root { --gold: #b89c62; --gold-dark: #8e7340; --cream: #faf8f5; --text: #333; --leaf: #a4b49c; }
+        body { margin: 0; background: var(--cream); font-family: 'Cormorant Garamond', serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+        .wrapper { max-width: 550px; margin: 0 auto; padding: 70px 25px; text-align: center; background: white; border: 1px solid #f0f0f0; box-shadow: 0 15px 50px rgba(0,0,0,0.03); min-height: 100vh; position: relative; }
         
-        /* Elite Typography */
-        h3 { font-family: 'Montserrat', sans-serif; font-weight: 200; font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 20px; color: var(--gold); }
-        h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 400; margin: 0; line-height: 1.2; }
-        .ampersand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 2rem; color: var(--gold); display: block; margin: 5px 0; }
-        .sub-text { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 1px; margin: 30px 0; opacity: 0.7; }
+        /* Christian Accents */
+        .cross-divider { font-size: 1.5rem; color: var(--gold); margin: 30px 0; opacity: 0.7; }
+        .eucalyptus-top { width: 120px; position: absolute; top: 0; left: 0; opacity: 0.3; }
 
-        /* Countdown Timer */
-        #countdown { display: flex; justify-content: center; gap: 20px; margin: 40px 0; padding: 20px 0; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-        .time-unit { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
-        .time-unit span { display: block; font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 600; }
+        /* ELITE TYPOGRAPHY */
+        h3 { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 25px; color: var(--gold-dark); }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 400; margin: 0; line-height: 1.1; font-style: italic; color: #1a1a1a; }
+        .ampersand { display: block; font-family: 'Cormorant Garamond', serif; font-style: normal; font-size: 2rem; color: var(--gold); margin: 10px 0; font-weight: 300; }
+        .bible-verse { font-style: italic; font-size: 1rem; color: #777; margin: 40px 0; padding: 0 20px; line-height: 1.6; border-left: 2px solid #f0f0f0; border-right: 2px solid #f0f0f0; }
+        
+        /* COUNTDOWN */
+        #countdown { display: flex; justify-content: center; gap: 20px; margin: 50px 0; padding: 25px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+        .time-unit { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: #888; }
+        .time-unit span { display: block; font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 600; }
 
-        /* Event Cards */
-        .event { margin-bottom: 50px; padding: 0 10px; }
-        .event h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px; font-style: italic; }
-        .details { font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; }
+        /* EVENT SECTIONS */
+        .event-section { margin-bottom: 60px; text-align: left; padding: 0 15px; }
+        .event-section h2 { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .date-block { font-size: 1.2rem; font-weight: 500; margin-bottom: 5px; color: #000; }
+        .time-block { font-size: 1.1rem; line-height: 1.7; color: #555; margin-bottom: 15px; }
+        .time-block strong { color: #222; font-weight: 500; }
+
+        /* INTERACTIVE GPS BUTTONS */
+        .btn-gps { display: inline-flex; align-items: center; padding: 12px 28px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.5s ease; border-radius: 3px; }
+        .btn-gps:hover { background: var(--gold); color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184, 156, 98, 0.2); }
+        .gps-icon { width: 12px; margin-right: 10px; opacity: 0.7; }
+
+        /* CALENDAR BUTTON */
+        .btn-calendar { display: block; width: calc(100% - 30px); margin: 60px 15px 0; padding: 18px 0; background: var(--gold); color: white; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: background 0.4s; }
+        .btn-calendar:hover { background: var(--gold-dark); }
         
-        /* Elite Buttons */
-        .btn { display: inline-block; padding: 15px 35px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; transition: all 0.4s ease; margin-top: 10px; }
-        .btn:hover { background: var(--gold); color: white; }
-        .btn-calendar { background: var(--dark); border-color: var(--dark); color: white; margin-top: 40px; }
-        
-        .leaf-icon { width: 40px; margin-bottom: 20px; opacity: 0.6; }
+        .footer-tag { margin-top: 80px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 4px; color: #aaa; }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913501.png" class="leaf-icon" alt="leaf">
+    <img src="https://cdn-icons-png.flaticon.com/512/3037/3037135.png" class="eucalyptus-top" alt="leaf-accent">
     
-    <h3>The Union Of</h3>
+    <h3>The Joyful Celebration Of</h3>
     <h1>Infantselva S</h1>
     <span class="ampersand">&</span>
     <h1>Jerline Rufina</h1>
     
-    <p class="sub-text">TOGETHER WITH THEIR FAMILIES, WE INVITE YOU TO CELEBRATE OUR JOURNEY</p>
+    <div class="cross-divider">†</div>
+
+    <p class="bible-verse">"And over all these virtues put on love, which binds them all together in perfect unity."<br><br>— Colossians 3:14</p>
 
     <div id="countdown">
         <div class="time-unit"><span id="days">00</span>Days</div>
@@ -52,32 +64,43 @@
         <div class="time-unit"><span id="mins">00</span>Mins</div>
     </div>
 
-    <div class="event">
+    <div class="event-section">
         <h2>The Reception</h2>
-        <p class="details">Sunday, May 17, 2026<br>
-        Srinagar - Kanyakumari Highway, Virupakshipuram</p>
-        <a href="https://share.google/9Kuhz8JXqoki4Udw8" class="btn" target="_blank">View Location</a>
+        <div class="date-block">Sunday, May 17, 2026</div>
+        <div class="time-block">
+            Evening Celebration & Dinner<br>
+            Srinagar - Kanyakumari Highway, Virupakshipuram
+        </div>
+        <a href="https://share.google/9Kuhz8JXqoki4Udw8" class="btn-gps" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1865/1865269.png" class="gps-icon" alt="gps">
+            View Hall on Google Maps
+        </a>
     </div>
 
-    <div class="event">
+    <div class="event-section">
         <h2>The Holy Matrimony</h2>
-        <p class="details">Monday, May 18, 2026<br>
-        <strong>9:00 AM</strong> — Church Mass<br>
-        <strong>11:30 AM</strong> — Function & Food</p>
-        <p class="details" style="font-size: 0.9rem;">Infant Jesus Church, Selliyampatti Parish</p>
-        <a href="https://share.google/XzdwiwAHZban8aoNK" class="btn" target="_blank">View Church</a>
+        <div class="date-block">Monday, May 18, 2026</div>
+        <div class="time-block">
+            <strong>09:00 AM</strong> — Holy Mass<br>
+            <strong>11:30 AM</strong> — Nuptial Blessing & Lunch<br><br>
+            Infant Jesus Church, Selliyampatti Parish
+        </div>
+        <a href="https://share.google/XzdwiwAHZban8aoNK" class="btn-gps" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1865/1865269.png" class="gps-icon" alt="gps">
+            View Church on Google Maps
+        </a>
     </div>
 
-    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Infantselva+%26+Jerline&details=Don't+forget+the+big+day!+Mass+starts+at+9am+followed+by+lunch.&location=Infant+Jesus+Church,+Selliyampatti+Parish&dates=20260518T033000Z/20260518T093000Z" 
-       class="btn btn-calendar" target="_blank">
+    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Infantselva+%26+Jerline&details=9:00+AM:+Church+Mass+%7C+11:30+AM:+Function+%26+Food.+Don't+forget+to+join+us!&location=Infant+Jesus+Church,+Selliyampatti+Parish&dates=20260518T033000Z/20260518T093000Z" 
+       class="btn-calendar" target="_blank">
        Add Reminder to Calendar
     </a>
 
-    <p style="margin-top: 60px; font-size: 0.7rem; letter-spacing: 3px; opacity: 0.5;">#INFANTWEDSJERLINE</p>
+    <p class="footer-tag">#INFANTWEDSJERLINE</p>
 </div>
 
 <script>
-    // Countdown Logic
+    // Countdown Logic (Target: May 18, 2026 at 9:00 AM IST)
     const weddingDate = new Date("May 18, 2026 09:00:00").getTime();
     setInterval(function() {
         const now = new Date().getTime();
