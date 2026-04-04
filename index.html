@@ -6,890 +6,764 @@
 <title>Infant Selva & Jerline Rufina — Wedding 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,500&family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
 :root {
-  --wine:        #3D0610;
-  --wine-mid:    #4A0814;
-  --wine-light:  #5C0A1A;
-  --shimmer: linear-gradient(90deg,
-    #8B6010 0%, #C9A84C 18%, #F5E27A 36%,
-    #FDF5C0 50%, #F5E27A 64%, #C9A84C 82%, #8B6010 100%);
+  --shimmer: linear-gradient(90deg, #8B6010 0%, #C9A84C 18%, #F5E27A 36%, #FDF5C0 50%, #F5E27A 64%, #C9A84C 82%, #8B6010 100%);
+  --gold: #C9A84C;
+  --gold-lt: #F5E27A;
+  --bg: #0E0205;
+  --card-bg: linear-gradient(158deg, #5C0A1A 0%, #4A0814 30%, #3A0610 65%, #4A0814 100%);
 }
-
 html { scroll-behavior:smooth; }
+body { min-height:100vh; background:var(--bg); font-family:"Cormorant Garamond",serif; overflow-x:hidden; }
+#starfield { position:fixed; inset:0; pointer-events:none; z-index:0; }
 
-body {
-  min-height:100vh;
-  background:#0E0205;
-  font-family:'Cormorant Garamond',serif;
-  overflow-x:hidden;
-}
+/* ═══════════════════════════════════════════
+   SCREEN SYSTEM — only one visible at a time
+═══════════════════════════════════════════ */
+.screen { display:none; position:relative; z-index:1; min-height:100vh; }
+.screen.active { display:flex; }
 
-/* ══ STAR CANVAS ══ */
-#starfield {
-  position:fixed; inset:0;
-  pointer-events:none; z-index:0;
-}
-
-/* ══ PAGE ══ */
-.page {
-  position:relative; z-index:1;
-  display:flex; flex-direction:column;
+/* ═══════════════════════════════════════════
+   LANDING SCREEN
+═══════════════════════════════════════════ */
+#screen-landing {
+  flex-direction:column;
   align-items:center;
+  justify-content:center;
+  padding:48px 20px 60px;
+}
+
+/* Floating petals */
+.petals { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.petal { position:absolute; top:-40px; opacity:0; animation:fall linear infinite; }
+@keyframes fall {
+  0%   { opacity:0; transform:translateY(0) rotate(0deg); }
+  8%   { opacity:0.6; }
+  92%  { opacity:0.35; }
+  100% { opacity:0; transform:translateY(110vh) rotate(400deg); }
+}
+
+.landing-inner {
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+  width:100%; max-width:460px;
+  animation:fadeUp 1.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(40px);} to{opacity:1;transform:none;} }
+
+.l-ornament {
+  font-size:0.55rem; letter-spacing:0.55em; color:rgba(201,168,76,0.5);
+  margin-bottom:22px; animation:fadeUp 1.6s 0.1s both;
+}
+.l-title {
+  font-family:"Great Vibes",cursive;
+  font-size:clamp(2.6rem,10vw,4.4rem);
+  background:var(--shimmer); background-size:200% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  text-align:center; line-height:1.1;
+  animation:shimmer 5s linear infinite, fadeUp 1.6s 0.15s both;
+}
+@keyframes shimmer { to { background-position:200% center; } }
+.l-amp {
+  font-family:"Great Vibes",cursive;
+  font-size:clamp(1.4rem,5vw,2rem);
+  color:rgba(201,168,76,0.55);
+  display:block; text-align:center; margin:2px 0 2px;
+  animation:fadeUp 1.6s 0.2s both;
+}
+.l-dates {
+  font-family:"Montserrat",sans-serif; font-weight:300;
+  font-size:0.52rem; letter-spacing:0.45em; text-transform:uppercase;
+  color:rgba(255,210,175,0.6); text-align:center;
+  margin-top:10px; margin-bottom:6px;
+  animation:fadeUp 1.6s 0.25s both;
+}
+.l-tagline {
+  font-family:"Cormorant Garamond",serif; font-style:italic;
+  font-size:clamp(0.9rem,2.5vw,1.05rem);
+  color:rgba(255,218,188,0.65); text-align:center;
+  margin-bottom:42px;
+  animation:fadeUp 1.6s 0.3s both;
+}
+
+/* Divider */
+.l-divider {
+  width:100%; display:flex; align-items:center; gap:12px; margin-bottom:32px;
+  animation:fadeUp 1.6s 0.35s both;
+}
+.l-divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent); }
+.l-divider-star { font-size:0.5rem; color:rgba(201,168,76,0.6); letter-spacing:6px; }
+
+.l-prompt {
+  font-family:"Montserrat",sans-serif; font-weight:300;
+  font-size:0.5rem; letter-spacing:0.5em; text-transform:uppercase;
+  color:rgba(201,168,76,0.45); text-align:center; margin-bottom:20px;
+  animation:fadeUp 1.6s 0.4s both;
+}
+
+/* Selection cards */
+.l-choices { display:flex; flex-direction:column; gap:12px; width:100%; animation:fadeUp 1.6s 0.45s both; }
+
+.choice-btn {
+  width:100%; padding:22px 28px;
+  border:1px solid rgba(201,168,76,0.28);
+  background:rgba(255,255,255,0.022);
+  cursor:pointer; text-align:center;
+  transition:all 0.4s ease;
+  position:relative; overflow:hidden;
+  font-family:inherit;
+}
+.choice-btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.07),transparent);
+  opacity:0; transition:opacity 0.4s;
+}
+.choice-btn:hover { border-color:rgba(201,168,76,0.65); transform:translateY(-2px); box-shadow:0 10px 36px rgba(201,168,76,0.09); }
+.choice-btn:hover::before { opacity:1; }
+.choice-btn:active { transform:translateY(0); }
+
+.choice-icon { font-size:1.1rem; display:block; margin-bottom:7px; }
+.choice-label {
+  font-family:"Cinzel",serif; font-weight:600;
+  font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase;
+  background:var(--shimmer); background-size:200% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:shimmer 5s linear infinite;
+  display:block; margin-bottom:6px;
+}
+.choice-sub {
+  font-family:"Cormorant Garamond",serif; font-style:italic;
+  font-size:clamp(0.85rem,2vw,0.96rem);
+  color:rgba(255,210,175,0.52);
+  display:block;
+}
+
+.l-footer {
+  margin-top:44px;
+  font-family:"Montserrat",sans-serif; font-weight:300;
+  font-size:0.44rem; letter-spacing:0.35em; text-transform:uppercase;
+  color:rgba(201,168,76,0.22); text-align:center;
+  animation:fadeUp 1.6s 0.55s both;
+}
+
+/* ═══════════════════════════════════════════
+   INVITATION SCREEN (shared styles)
+═══════════════════════════════════════════ */
+#screen-bride, #screen-groom {
+  flex-direction:column; align-items:center;
   padding:36px 14px 80px;
 }
 
-/* ══ CARD ══ */
+/* Back button */
+.back-btn {
+  position:fixed; top:18px; left:18px; z-index:100;
+  display:flex; align-items:center; gap:8px;
+  padding:8px 16px;
+  border:1px solid rgba(201,168,76,0.3); background:rgba(14,2,5,0.88);
+  cursor:pointer; font-family:"Montserrat",sans-serif; font-weight:400;
+  font-size:0.42rem; letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(245,210,155,0.8); transition:all 0.3s;
+  backdrop-filter:blur(6px);
+}
+.back-btn:hover { border-color:rgba(201,168,76,0.65); color:rgba(253,245,192,1); }
+.back-btn svg { width:11px; height:11px; fill:currentColor; }
+
+/* Welcome banner */
+.welcome-banner {
+  width:100%; max-width:500px; margin-bottom:14px;
+  padding:12px 20px; text-align:center;
+  border:1px solid rgba(201,168,76,0.22);
+  background:rgba(201,168,76,0.06);
+  font-family:"Cormorant Garamond",serif; font-style:italic;
+  font-size:clamp(0.88rem,2.2vw,1rem);
+  color:rgba(255,218,188,0.82);
+  animation:fadeUp 1s both;
+}
+
+/* ═══════════════════════════════════════════
+   INVITATION CARD (same for both)
+═══════════════════════════════════════════ */
+.page { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; width:100%; }
 .card {
   width:100%; max-width:500px;
-  background:linear-gradient(158deg, #5C0A1A 0%, #4A0814 30%, #3A0610 65%, #4A0814 100%);
-  border-radius:3px;
-  position:relative; overflow:hidden;
-  padding:52px 46px 48px;
-  display:flex; flex-direction:column;
+  background:var(--card-bg);
+  border-radius:3px; position:relative; overflow:hidden;
+  padding:52px 46px 48px; display:flex; flex-direction:column;
   align-items:center; text-align:center; gap:0;
-  animation:card-rise 2s cubic-bezier(0.16,1,0.3,1) both;
+  animation:card-rise 1.8s cubic-bezier(0.16,1,0.3,1) both;
   box-shadow:
-    0 0 0 1px rgba(201,168,76,0.38),
-    0 0 0 3px rgba(60,4,12,0.9),
-    0 0 0 4px rgba(201,168,76,0.14),
-    0 0 80px rgba(201,168,76,0.08),
-    0 50px 130px rgba(0,0,0,0.92),
-    0 20px 50px rgba(80,5,20,0.55);
+    0 0 0 1px rgba(201,168,76,0.38), 0 0 0 3px rgba(60,4,12,0.9),
+    0 0 0 4px rgba(201,168,76,0.14), 0 0 80px rgba(201,168,76,0.08),
+    0 50px 130px rgba(0,0,0,0.92), 0 20px 50px rgba(80,5,20,0.55);
 }
 @keyframes card-rise {
-  from { opacity:0; transform:translateY(70px) scale(0.94); filter:blur(10px); }
+  from { opacity:0; transform:translateY(60px) scale(0.95); filter:blur(8px); }
   55%  { filter:blur(0); }
   to   { opacity:1; transform:translateY(0) scale(1); }
 }
 .card::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
+  content:""; position:absolute; inset:0; pointer-events:none;
   background:
     repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.022) 2px,rgba(0,0,0,0.022) 4px),
     repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(255,255,255,0.006) 4px,rgba(255,255,255,0.006) 8px);
 }
-
-/* corner borders */
 .c-border { position:absolute; inset:13px; border:1px solid rgba(201,168,76,0.2); pointer-events:none; z-index:2; }
 .c-tl,.c-tr,.c-bl,.c-br { position:absolute; width:22px; height:22px; border-color:rgba(201,168,76,0.55); border-style:solid; pointer-events:none; z-index:3; }
-.c-tl { top:11px; left:11px;   border-width:1.5px 0 0 1.5px; }
-.c-tr { top:11px; right:11px;  border-width:1.5px 1.5px 0 0; }
-.c-bl { bottom:11px; left:11px;  border-width:0 0 1.5px 1.5px; }
+.c-tl { top:11px; left:11px; border-width:1.5px 0 0 1.5px; }
+.c-tr { top:11px; right:11px; border-width:1.5px 1.5px 0 0; }
+.c-bl { bottom:11px; left:11px; border-width:0 0 1.5px 1.5px; }
 .c-br { bottom:11px; right:11px; border-width:0 1.5px 1.5px 0; }
 
-/* ══ GOLD SHIMMER ══ */
-.gold {
-  background:var(--shimmer);
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  animation:gs 4s linear infinite;
-}
-@keyframes gs { to { background-position:200% center; } }
-
-/* ══ NAMES ══ */
-.name-groom, .name-bride {
-  font-family:'Cinzel',serif; font-weight:700;
-  font-size:clamp(1.55rem,5.5vw,2.05rem);
-  letter-spacing:0.1em; text-transform:uppercase;
-  line-height:1.1; display:block; position:relative; z-index:1;
-}
-.name-groom { animation:up 1s 0.4s both; }
-.name-bride  { animation:up 1s 0.72s both; }
-@keyframes up {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.and-script {
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(2.7rem,8vw,3.5rem);
-  line-height:0.9; display:block; margin:4px 0;
-  animation:up 1s 0.56s both;
-}
-
-/* ══ ORNAMENT ══ */
+.gold { background:var(--shimmer); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:shimmer 4s linear infinite; }
+.name-1,.name-2 { font-family:"Cinzel",serif; font-weight:700; font-size:clamp(1.55rem,5.5vw,2.05rem); letter-spacing:0.1em; text-transform:uppercase; line-height:1.1; display:block; }
+.name-1 { animation:up 1s 0.4s both; }
+.name-2 { animation:up 1s 0.72s both; }
+@keyframes up { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+.and-script { font-family:"Great Vibes",cursive; font-size:clamp(2.7rem,8vw,3.5rem); line-height:0.9; display:block; margin:4px 0; animation:up 1s 0.56s both; }
 .orn { display:flex; align-items:center; gap:10px; width:100%; margin:14px 0; }
 .orn-l { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5)); }
 .orn-r { flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.5),transparent); }
-.orn-s  { font-size:0.52rem; color:rgba(201,168,76,0.8); letter-spacing:5px; }
-
-/* ══ TEXT STYLES ══ */
-.sub-italic {
-  font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400;
-  font-size:clamp(0.9rem,2.2vw,1rem);
-  color:rgba(255,220,190,0.88); letter-spacing:0.08em; line-height:1.9;
-}
-.sub-caps {
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.48rem;
-  letter-spacing:0.35em; text-transform:uppercase;
-  color:rgba(255,210,175,0.72); line-height:2.2;
-}
-
-/* ══ DATES HERO ══ */
+.orn-s { font-size:0.52rem; color:rgba(201,168,76,0.8); letter-spacing:5px; }
+.sub-italic { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(0.9rem,2.2vw,1rem); color:rgba(255,220,190,0.88); letter-spacing:0.08em; line-height:1.9; }
+.sub-caps { font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.48rem; letter-spacing:0.35em; text-transform:uppercase; color:rgba(255,210,175,0.72); line-height:2.2; }
 .dates-hero { width:100%; margin:2px 0; }
-.day-row {
-  display:flex; align-items:center; gap:0;
-  border:1px solid rgba(201,168,76,0.25);
-  margin-bottom:8px; background:rgba(0,0,0,0.25);
-  transition:border-color 0.3s, background 0.3s;
-  position:relative; overflow:hidden;
-}
+.day-row { display:flex; align-items:center; border:1px solid rgba(201,168,76,0.25); margin-bottom:8px; background:rgba(0,0,0,0.25); transition:border-color 0.3s,background 0.3s; position:relative; overflow:hidden; }
 .day-row:hover { border-color:rgba(201,168,76,0.5); background:rgba(0,0,0,0.35); }
-.day-num-col {
-  padding:14px 16px;
-  border-right:1px solid rgba(201,168,76,0.22);
-  min-width:64px; text-align:center;
-}
-.day-num {
-  font-family:'Cinzel',serif; font-weight:700;
-  font-size:clamp(1.5rem,4.5vw,2rem); line-height:1; display:block;
-}
-.day-month {
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.42rem;
-  letter-spacing:0.28em; text-transform:uppercase;
-  color:rgba(245,210,155,0.82); display:block; margin-top:3px;
-}
+.day-num-col { padding:14px 16px; border-right:1px solid rgba(201,168,76,0.22); min-width:64px; text-align:center; }
+.day-num { font-family:"Cinzel",serif; font-weight:700; font-size:clamp(1.5rem,4.5vw,2rem); line-height:1; display:block; }
+.day-month { font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.42rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(245,210,155,0.82); display:block; margin-top:3px; }
 .day-info { padding:12px 14px; text-align:left; flex:1; }
-.day-label {
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.38em; text-transform:uppercase;
-  color:rgba(245,210,155,0.75); margin-bottom:5px; display:block;
-}
-.day-title {
-  font-family:'Cinzel',serif; font-weight:600;
-  font-size:clamp(0.78rem,2vw,0.9rem);
-  letter-spacing:0.08em; text-transform:uppercase; line-height:1.35;
-  color:rgba(255,235,205,0.96);
-}
-.day-time {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:clamp(0.82rem,2vw,0.92rem);
-  color:rgba(255,210,175,0.78); margin-top:3px; display:block;
-}
+.day-label { font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.38em; text-transform:uppercase; color:rgba(245,210,155,0.75); margin-bottom:5px; display:block; }
+.day-title { font-family:"Cinzel",serif; font-weight:600; font-size:clamp(0.78rem,2vw,0.9rem); letter-spacing:0.08em; text-transform:uppercase; line-height:1.35; color:rgba(255,235,205,0.96); }
+.day-time { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(0.82rem,2vw,0.92rem); color:rgba(255,210,175,0.78); margin-top:3px; display:block; }
 
-/* ══ CALENDAR MODAL ══ */
-.cal-overlay {
-  position:fixed; inset:0; z-index:200;
-  background:rgba(5,1,0,0.82);
-  backdrop-filter:blur(6px);
-  display:flex; align-items:flex-end; justify-content:center;
-  padding-bottom:0;
-  opacity:0; pointer-events:none;
-  transition:opacity 0.4s ease;
-}
-.cal-overlay.open { opacity:1; pointer-events:all; }
-.cal-sheet {
-  width:100%; max-width:500px;
-  background:linear-gradient(180deg,#4A0814,#3A0610);
-  border:1px solid rgba(201,168,76,0.3);
-  border-bottom:none;
-  padding:30px 28px 36px;
-  transform:translateY(100%);
-  transition:transform 0.45s cubic-bezier(0.16,1,0.3,1);
-  position:relative;
-}
-.cal-overlay.open .cal-sheet { transform:translateY(0); }
-.cal-sheet-handle {
-  width:40px; height:3px;
-  background:rgba(201,168,76,0.3);
-  border-radius:2px; margin:0 auto 22px;
-}
-.cal-sheet-title {
-  font-family:'Cinzel',serif; font-weight:600;
-  font-size:clamp(0.85rem,2.5vw,1rem);
-  letter-spacing:0.12em; text-transform:uppercase;
-  margin-bottom:6px;
-}
-.cal-sheet-sub {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:0.95rem; color:rgba(255,215,180,0.78);
-  margin-bottom:22px; letter-spacing:0.05em;
-}
-.cal-events { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
-.cal-event {
-  border:1px solid rgba(201,168,76,0.25);
-  padding:12px 16px; background:rgba(0,0,0,0.22);
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px;
-}
-.cal-event-info { text-align:left; flex:1; }
-.cal-event-name {
-  font-family:'Cinzel',serif; font-weight:600;
-  font-size:clamp(0.72rem,2vw,0.84rem);
-  letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,235,205,0.96);
-}
-.cal-event-date {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:0.88rem; color:rgba(255,210,175,0.75); margin-top:2px;
-}
-.cal-add-btn {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:7px 14px;
-  background:linear-gradient(135deg,rgba(139,96,16,0.3),rgba(201,168,76,0.14));
-  border:1px solid rgba(201,168,76,0.5);
-  font-family:'Montserrat',sans-serif; font-weight:500; font-size:0.38rem;
-  letter-spacing:0.25em; text-transform:uppercase;
-  color:rgba(245,226,122,0.95); cursor:pointer;
-  transition:all 0.25s; white-space:nowrap; flex-shrink:0;
-}
-.cal-add-btn:hover { border-color:rgba(245,226,122,0.8); color:#FDF5C0; background:linear-gradient(135deg,rgba(139,96,16,0.5),rgba(201,168,76,0.25)); }
-.cal-add-btn svg { width:11px; height:11px; fill:currentColor; }
-.cal-close-btn {
-  width:100%; padding:12px;
-  background:transparent; border:1px solid rgba(201,168,76,0.28);
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.38em; text-transform:uppercase;
-  color:rgba(245,210,155,0.72); cursor:pointer; transition:all 0.25s;
-}
-.cal-close-btn:hover { border-color:rgba(201,168,76,0.55); color:rgba(245,226,122,0.92); }
-
-/* ══ SAVE TO CALENDAR trigger btn (at bottom of card) ══ */
-.save-cal-trigger {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; padding:13px 20px; margin-top:18px;
-  background:linear-gradient(135deg,rgba(139,96,16,0.32),rgba(201,168,76,0.15));
-  border:1px solid rgba(201,168,76,0.45);
-  cursor:pointer; font-family:'Montserrat',sans-serif;
-  font-weight:400; font-size:0.44rem;
-  letter-spacing:0.38em; text-transform:uppercase;
-  color:rgba(245,218,140,0.92); transition:all 0.3s;
-  position:relative; overflow:hidden;
-}
-.save-cal-trigger::before {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.08),transparent);
-  animation:sweep 3s linear infinite;
-}
-@keyframes sweep { from{transform:translateX(-100%);} to{transform:translateX(100%);} }
-.save-cal-trigger:hover { border-color:rgba(245,226,122,0.7); color:rgba(253,245,192,1); }
-.save-cal-trigger svg { width:14px; height:14px; fill:currentColor; }
-
-/* ══ TABS ══ */
-.tabs {
-  display:flex; gap:0; width:100%; margin:18px 0 0;
-  border:1px solid rgba(201,168,76,0.28); overflow:hidden;
-}
-.tab-btn {
-  flex:1; padding:10px 3px;
-  background:transparent; border:none; cursor:pointer;
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.22em; text-transform:uppercase;
-  color:rgba(245,210,155,0.68); transition:all 0.3s; position:relative;
-}
+/* Tabs */
+.tabs { display:flex; width:100%; margin:18px 0 0; border:1px solid rgba(201,168,76,0.28); overflow:hidden; }
+.tab-btn { flex:1; padding:10px 3px; background:transparent; border:none; cursor:pointer; font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(245,210,155,0.68); transition:all 0.3s; position:relative; }
 .tab-btn+.tab-btn { border-left:1px solid rgba(201,168,76,0.22); }
-.tab-btn::after {
-  content:''; position:absolute; bottom:0; left:50%; right:50%; height:1.5px;
-  background:linear-gradient(90deg,#C9A84C,#F5E27A,#C9A84C);
-  transition:left 0.35s, right 0.35s;
-}
+.tab-btn::after { content:""; position:absolute; bottom:0; left:50%; right:50%; height:1.5px; background:linear-gradient(90deg,#C9A84C,#F5E27A,#C9A84C); transition:left 0.35s,right 0.35s; }
 .tab-btn.active { color:rgba(253,245,192,0.98); }
 .tab-btn.active::after { left:0; right:0; }
-
-/* ══ PANELS ══ */
 .section-panels { width:100%; }
 .s-panel { display:none; width:100%; padding:20px 0 4px; animation:pin 0.5s ease both; }
 .s-panel.active { display:block; }
 @keyframes pin { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:none;} }
 
-/* ══ VENUE CARDS ══ */
-.venue-card {
-  border:1px solid rgba(201,168,76,0.24); padding:16px 18px; margin-bottom:11px;
-  background:rgba(0,0,0,0.22); text-align:left; position:relative;
-  transition:border-color 0.3s, background 0.3s;
-}
+/* Venue cards */
+.venue-card { border:1px solid rgba(201,168,76,0.24); padding:16px 18px; margin-bottom:11px; background:rgba(0,0,0,0.22); text-align:left; position:relative; transition:border-color 0.3s,background 0.3s; }
 .venue-card:hover { border-color:rgba(201,168,76,0.5); background:rgba(0,0,0,0.32); }
-.venue-tag {
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.4em; text-transform:uppercase;
-  color:rgba(245,210,155,0.75); margin-bottom:6px; display:block;
-}
-.venue-title {
-  font-family:'Cinzel',serif; font-weight:600;
-  font-size:clamp(0.82rem,2.5vw,0.96rem);
-  letter-spacing:0.1em; text-transform:uppercase; line-height:1.4; margin-bottom:3px;
-}
-.venue-addr-text {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:clamp(0.84rem,2vw,0.94rem);
-  color:rgba(255,215,185,0.78); line-height:1.7; margin-bottom:11px;
-}
-/* MAP BUTTON */
-.map-btn {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:8px 18px;
-  background:linear-gradient(135deg,rgba(139,96,16,0.38),rgba(201,168,76,0.2));
-  border:1px solid rgba(201,168,76,0.55); text-decoration:none;
-  font-family:'Montserrat',sans-serif; font-weight:500; font-size:0.42rem;
-  letter-spacing:0.26em; text-transform:uppercase;
-  color:rgba(253,245,192,0.97); cursor:pointer;
-  transition:all 0.3s ease; position:relative; overflow:hidden;
-}
-.map-btn:hover { border-color:rgba(245,226,122,0.85); color:#FFFFFF; background:linear-gradient(135deg,rgba(139,96,16,0.55),rgba(201,168,76,0.35)); }
+.venue-tag { font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.4em; text-transform:uppercase; color:rgba(245,210,155,0.75); margin-bottom:6px; display:block; }
+.venue-title { font-family:"Cinzel",serif; font-weight:600; font-size:clamp(0.82rem,2.5vw,0.96rem); letter-spacing:0.1em; text-transform:uppercase; line-height:1.4; margin-bottom:3px; }
+.venue-addr-text { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(0.84rem,2vw,0.94rem); color:rgba(255,215,185,0.78); line-height:1.7; margin-bottom:11px; }
+.map-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 18px; background:linear-gradient(135deg,rgba(139,96,16,0.38),rgba(201,168,76,0.2)); border:1px solid rgba(201,168,76,0.55); text-decoration:none; font-family:"Montserrat",sans-serif; font-weight:500; font-size:0.42rem; letter-spacing:0.26em; text-transform:uppercase; color:rgba(253,245,192,0.97); cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; margin-right:6px; margin-bottom:6px; }
+.map-btn:hover { border-color:rgba(245,226,122,0.85); }
 .map-btn svg { width:12px; height:12px; fill:currentColor; flex-shrink:0; }
-.pulse-ring {
-  position:absolute; inset:-1px;
-  border:1px solid rgba(201,168,76,0.35);
-  animation:pr 2.4s ease-in-out infinite; pointer-events:none;
-}
+.pulse-ring { position:absolute; inset:-1px; border:1px solid rgba(201,168,76,0.35); animation:pr 2.4s ease-in-out infinite; pointer-events:none; }
 @keyframes pr { 0%,100%{opacity:0;transform:scale(1);} 50%{opacity:1;transform:scale(1.015);} }
 
-/* ══ PROGRAMME ══ */
+/* Programme */
 .prog-list { width:100%; }
-.prog-day-head {
-  font-family:'Montserrat',sans-serif; font-weight:500; font-size:0.42rem;
-  letter-spacing:0.38em; text-transform:uppercase;
-  color:rgba(245,218,140,0.92);
-  padding:10px 0 8px; margin-bottom:0;
-  border-bottom:1px solid rgba(201,168,76,0.2);
-  display:flex; align-items:center; gap:10px;
-}
+.prog-day-head { font-family:"Montserrat",sans-serif; font-weight:500; font-size:0.42rem; letter-spacing:0.38em; text-transform:uppercase; color:rgba(245,218,140,0.92); padding:10px 0 8px; border-bottom:1px solid rgba(201,168,76,0.2); display:flex; align-items:center; gap:10px; }
 .prog-day-head .pdl { flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.4),transparent); }
-.prog-item {
-  display:grid; grid-template-columns:68px 1px 1fr;
-  gap:0 14px; align-items:start;
-  padding:11px 0; border-bottom:1px solid rgba(201,168,76,0.1);
-  transition:background 0.2s;
-}
+.prog-item { display:grid; grid-template-columns:68px 1px 1fr; gap:0 14px; align-items:start; padding:11px 0; border-bottom:1px solid rgba(201,168,76,0.1); }
 .prog-item:last-child { border-bottom:none; }
-.prog-item:hover { background:rgba(201,168,76,0.04); }
-.prog-time {
-  font-family:'Cinzel',serif; font-size:0.62rem;
-  letter-spacing:0.06em; text-align:right; padding-top:2px;
-}
+.prog-time { font-family:"Cinzel",serif; font-size:0.62rem; letter-spacing:0.06em; text-align:right; padding-top:2px; }
 .prog-vl { width:1px; background:linear-gradient(180deg,transparent,rgba(201,168,76,0.45),transparent); align-self:stretch; min-height:22px; }
-.prog-name { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(0.92rem,2.2vw,1.04rem); color:rgba(255,238,215,0.97); line-height:1.3; }
-.prog-sub  { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.86rem; color:rgba(255,212,178,0.72); margin-top:2px; }
+.prog-name { font-family:"Cormorant Garamond",serif; font-weight:600; font-size:clamp(0.92rem,2.2vw,1.04rem); color:rgba(255,238,215,0.97); line-height:1.3; }
+.prog-sub { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:0.86rem; color:rgba(255,212,178,0.72); margin-top:2px; }
 .prog-spacer { height:10px; }
 
-/* add to calendar */
-.cal-btn {
-  display:flex; align-items:center; justify-content:center; gap:9px;
-  width:100%; padding:11px 20px; margin-top:14px;
-  background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,76,0.32);
-  cursor:pointer; font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.42rem;
-  letter-spacing:0.32em; text-transform:uppercase; color:rgba(245,218,140,0.88);
-  transition:all 0.3s;
-}
-.cal-btn:hover { border-color:rgba(201,168,76,0.6); color:rgba(253,245,192,0.98); }
-.cal-btn svg { width:13px; height:13px; fill:currentColor; }
+/* Family cards */
+.fam-card { border:1px solid rgba(201,168,76,0.22); padding:15px 17px; margin-bottom:10px; background:rgba(0,0,0,0.2); text-align:left; }
+.fam-badge { font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.42em; text-transform:uppercase; color:rgba(245,210,155,0.75); margin-bottom:7px; display:block; }
+.fam-name { font-family:"Cinzel",serif; font-weight:600; font-size:clamp(0.84rem,2.2vw,0.98rem); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+.fam-parent { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(0.9rem,2vw,1rem); color:rgba(255,215,185,0.85); line-height:1.75; }
 
-/* ══ FAMILY CARDS ══ */
-.fam-card {
-  border:1px solid rgba(201,168,76,0.22); padding:15px 17px; margin-bottom:10px;
-  background:rgba(0,0,0,0.2); text-align:left;
-}
-.fam-badge {
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.42em; text-transform:uppercase;
-  color:rgba(245,210,155,0.75); margin-bottom:7px; display:block;
-}
-.fam-name { font-family:'Cinzel',serif; font-weight:600; font-size:clamp(0.84rem,2.2vw,0.98rem); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
-.fam-parent { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(0.9rem,2vw,1rem); color:rgba(255,215,185,0.85); line-height:1.75; }
-
-/* share */
+/* Share */
 .share-row { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-top:4px; }
-.share-btn {
-  display:inline-flex; align-items:center; gap:7px;
-  padding:9px 16px; border:1px solid rgba(201,168,76,0.3);
-  background:rgba(0,0,0,0.2); cursor:pointer;
-  font-family:'Montserrat',sans-serif; font-weight:400; font-size:0.4rem;
-  letter-spacing:0.26em; text-transform:uppercase;
-  color:rgba(245,210,155,0.85); transition:all 0.3s;
-}
-.share-btn:hover { border-color:rgba(201,168,76,0.6); color:rgba(253,245,192,0.98); }
+.share-btn { display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border:1px solid rgba(201,168,76,0.3); background:rgba(0,0,0,0.2); cursor:pointer; font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,210,155,0.85); transition:all 0.3s; }
+.share-btn:hover { border-color:rgba(201,168,76,0.6); }
 .share-btn svg { width:11px; height:11px; fill:currentColor; }
 
-/* ══ QUOTE ══ */
+/* Quote & footer */
 .quote-block { width:100%; padding-top:16px; margin-top:16px; border-top:1px solid rgba(201,168,76,0.2); }
-.quote-txt { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(0.9rem,2.2vw,1.02rem); color:rgba(255,218,188,0.78); line-height:1.95; letter-spacing:0.04em; }
-.quote-auth { font-family:'Montserrat',sans-serif; font-weight:300; font-size:0.42rem; letter-spacing:0.4em; text-transform:uppercase; color:rgba(245,210,155,0.62); margin-top:8px; }
-.year-script { font-family:'Great Vibes',cursive; font-size:1.9rem; color:rgba(201,168,76,0.55); margin-top:4px; display:block; }
+.quote-txt { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(0.9rem,2.2vw,1.02rem); color:rgba(255,218,188,0.78); line-height:1.95; letter-spacing:0.04em; }
+.quote-auth { font-family:"Montserrat",sans-serif; font-weight:300; font-size:0.42rem; letter-spacing:0.4em; text-transform:uppercase; color:rgba(245,210,155,0.62); margin-top:8px; }
+.year-script { font-family:"Great Vibes",cursive; font-size:1.9rem; color:rgba(201,168,76,0.55); margin-top:4px; display:block; }
 
-/* ══ TOAST ══ */
-.toast {
-  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px);
-  background:rgba(8,3,1,0.97); border:1px solid rgba(201,168,76,0.55);
-  padding:10px 24px; font-family:'Montserrat',sans-serif; font-size:0.44rem;
-  letter-spacing:0.25em; text-transform:uppercase; color:rgba(253,245,192,1);
-  opacity:0; transition:all 0.4s; z-index:300; pointer-events:none; white-space:nowrap;
-  box-shadow:0 8px 30px rgba(0,0,0,0.6);
-}
+/* Calendar button & modal */
+.save-cal-trigger { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:13px 20px; margin-top:18px; background:linear-gradient(135deg,rgba(139,96,16,0.32),rgba(201,168,76,0.15)); border:1px solid rgba(201,168,76,0.45); cursor:pointer; font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.44rem; letter-spacing:0.38em; text-transform:uppercase; color:rgba(245,218,140,0.92); transition:all 0.3s; position:relative; overflow:hidden; }
+.save-cal-trigger::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(201,168,76,0.08),transparent); animation:sweep 3s linear infinite; }
+@keyframes sweep { from{transform:translateX(-100%);} to{transform:translateX(100%);} }
+.save-cal-trigger svg { width:14px; height:14px; fill:currentColor; }
+.cal-overlay { position:fixed; inset:0; z-index:200; background:rgba(5,1,0,0.82); backdrop-filter:blur(6px); display:flex; align-items:flex-end; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s ease; }
+.cal-overlay.open { opacity:1; pointer-events:all; }
+.cal-sheet { width:100%; max-width:500px; background:linear-gradient(180deg,#4A0814,#3A0610); border:1px solid rgba(201,168,76,0.3); border-bottom:none; padding:30px 28px 36px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+.cal-overlay.open .cal-sheet { transform:translateY(0); }
+.cal-sheet-handle { width:40px; height:3px; background:rgba(201,168,76,0.3); border-radius:2px; margin:0 auto 22px; }
+.cal-sheet-title { font-family:"Cinzel",serif; font-weight:600; font-size:clamp(0.85rem,2.5vw,1rem); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; }
+.cal-sheet-sub { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:0.95rem; color:rgba(255,215,180,0.78); margin-bottom:22px; }
+.cal-events { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.cal-event { border:1px solid rgba(201,168,76,0.25); padding:12px 16px; background:rgba(0,0,0,0.22); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.cal-event-info { text-align:left; flex:1; }
+.cal-event-name { font-family:"Cinzel",serif; font-weight:600; font-size:clamp(0.72rem,2vw,0.84rem); letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,235,205,0.96); }
+.cal-event-date { font-family:"Cormorant Garamond",serif; font-style:italic; font-size:0.88rem; color:rgba(255,210,175,0.75); margin-top:2px; }
+.cal-add-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; background:linear-gradient(135deg,rgba(139,96,16,0.3),rgba(201,168,76,0.14)); border:1px solid rgba(201,168,76,0.5); font-family:"Montserrat",sans-serif; font-weight:500; font-size:0.38rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(245,226,122,0.95); cursor:pointer; transition:all 0.25s; white-space:nowrap; flex-shrink:0; }
+.cal-add-btn:hover { border-color:rgba(245,226,122,0.8); color:#FDF5C0; }
+.cal-add-btn svg { width:11px; height:11px; fill:currentColor; }
+.cal-close-btn { width:100%; padding:12px; background:transparent; border:1px solid rgba(201,168,76,0.28); font-family:"Montserrat",sans-serif; font-weight:400; font-size:0.4rem; letter-spacing:0.38em; text-transform:uppercase; color:rgba(245,210,155,0.72); cursor:pointer; transition:all 0.25s; }
+.cal-close-btn:hover { border-color:rgba(201,168,76,0.55); }
+
+/* Toast */
+.toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px); background:rgba(8,3,1,0.97); border:1px solid rgba(201,168,76,0.55); padding:10px 24px; font-family:"Montserrat",sans-serif; font-size:0.44rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(253,245,192,1); opacity:0; transition:all 0.4s; z-index:300; pointer-events:none; white-space:nowrap; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
 @media(max-width:430px){
-  .card { padding:44px 22px 42px; }
-  .day-info { padding:10px 10px; }
+  .card{padding:44px 22px 42px;}
+  .day-info{padding:10px 10px;}
+  .back-btn{top:12px;left:12px;padding:6px 12px;}
 }
 </style>
 </head>
 <body>
-
 <canvas id="starfield"></canvas>
 <div class="toast" id="toast"></div>
 
-<div class="page">
-<div class="card">
+<!-- ═══════════════════════════════════════════
+     SCREEN 1: LANDING — WHO ARE YOU?
+═══════════════════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <div class="petals" id="petals"></div>
+  <div class="landing-inner">
+    <div class="l-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="l-title">Infant Selva</div>
+    <span class="l-amp">&amp;</span>
+    <div class="l-title">Jerline Rufina</div>
+    <p class="l-dates">13th &nbsp;·&nbsp; 17th &nbsp;·&nbsp; 18th May 2026</p>
+    <p class="l-tagline">"This is the Lord's doing and it is marvellous in our eyes."</p>
 
-  <div class="c-border"></div>
-  <div class="c-tl"></div><div class="c-tr"></div>
-  <div class="c-bl"></div><div class="c-br"></div>
-
-  <!-- ══ NAMES ══ -->
-  <span class="name-groom gold">Infant Selva</span>
-  <span class="and-script gold">and</span>
-  <span class="name-bride gold">Jerline Rufina</span>
-
-  <div class="orn"><div class="orn-l"></div><div class="orn-s">✦ ✦ ✦</div><div class="orn-r"></div></div>
-
-  <p class="sub-italic">Together with our families,<br>we joyfully invite you to celebrate our wedding</p>
-
-  <div class="orn"><div class="orn-l"></div><div class="orn-s">✦</div><div class="orn-r"></div></div>
-
-  <!-- ══ TWO-DAY DATE CARDS ══ -->
-  <div class="dates-hero">
-
-    <div class="day-row">
-      <div class="day-num-col">
-        <span class="day-num gold">17</span>
-        <span class="day-month">May</span>
-      </div>
-      <div class="day-info">
-        <span class="day-label">Sunday Evening · Day 1</span>
-        <div class="day-title gold">Reception Ceremony</div>
-        <span class="day-time">K J Mahal (A/C) · Evening</span>
-      </div>
+    <div class="l-divider">
+      <div class="l-divider-line"></div>
+      <div class="l-divider-star">✦ ✦ ✦</div>
+      <div class="l-divider-line"></div>
     </div>
 
-    <div class="day-row">
-      <div class="day-num-col">
-        <span class="day-num gold">18</span>
-        <span class="day-month">May</span>
-      </div>
-      <div class="day-info">
-        <span class="day-label">Monday Morning · Day 2</span>
-        <div class="day-title gold">Wedding Ceremony</div>
-        <span class="day-time">Church · 9:00 AM · then K J Mahal</span>
-      </div>
+    <p class="l-prompt">Please select your invitation</p>
+
+    <div class="l-choices">
+      <button class="choice-btn" onclick="showInvite('bride')">
+        <span class="choice-icon">💐</span>
+        <span class="choice-label">✦ &nbsp; Bride's Family Invitation</span>
+        <span class="choice-sub">Mr. Viagula Jervillas .T &amp; Mrs. Celine Mary .A</span>
+      </button>
+      <button class="choice-btn" onclick="showInvite('groom')">
+        <span class="choice-icon">🤵</span>
+        <span class="choice-label">✦ &nbsp; Groom's Family Invitation</span>
+        <span class="choice-sub">Mr. Selvanathan .A &amp; Mrs. Stella Rani .A</span>
+      </button>
     </div>
 
+    <p class="l-footer">With Love &bull; May 2026 &bull; Dharmapuri &bull; Chennai</p>
   </div>
+</div>
 
-  <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">✦</div><div class="orn-r"></div></div>
-
-  <!-- ══ TABS ══ -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('venues',this)">📍 Venues</button>
-    <button class="tab-btn" onclick="switchTab('programme',this)">📋 Schedule</button>
-    <button class="tab-btn" onclick="switchTab('details',this)">👨‍👩‍👧 Families</button>
-  </div>
-
-  <div class="section-panels">
-
-    <!-- VENUES -->
-    <div class="s-panel active" id="panel-venues">
-
-      <div class="venue-card">
-        <span class="venue-tag">Day 1 · 17th May Evening</span>
-        <div class="venue-title gold">K J Mahal (A/C)</div>
-        <div class="venue-addr-text">Reception Ceremony<br>Dharmapuri, Tamil Nadu</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank">
-            <div class="pulse-ring"></div>
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            View Location ↗
-          </a>
-          <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&destination_place_id=ChIJKyvTZWYXrDsR7AzGb9bDozg&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);">
-            <svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>
-            Directions ↗
-          </a>
-        </div>
-      </div>
-
-      <div class="venue-card">
-        <span class="venue-tag">Day 2 · 18th May · 9:00 AM</span>
-        <div class="venue-title gold">Infant Jesus Church</div>
-        <div class="venue-addr-text">Wedding Ceremony<br>Selliyampatti Parish, Dharmapuri</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a class="map-btn" href="https://www.google.com/maps/place/Infant+Jesus+Church,+Selliyampatti+Parish,+Dharmapuri/@12.1844761,78.1261234,17z" target="_blank">
-            <div class="pulse-ring"></div>
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            View Location ↗
-          </a>
-          <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1844761,78.1261234&destination_place_id=ChIJn47obVk9rDsRaf_XkUlI_v0&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);">
-            <svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>
-            Directions ↗
-          </a>
-        </div>
-      </div>
-
-      <div class="venue-card">
-        <span class="venue-tag">Day 2 · After Church</span>
-        <div class="venue-title gold">K J Mahal (A/C)</div>
-        <div class="venue-addr-text">Marriage Functions & Grand Feast<br>Dharmapuri, Tamil Nadu</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank">
-            <div class="pulse-ring"></div>
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            View Location ↗
-          </a>
-          <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&destination_place_id=ChIJKyvTZWYXrDsR7AzGb9bDozg&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);">
-            <svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>
-            Directions ↗
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROGRAMME -->
-    <div class="s-panel" id="panel-programme">
-      <div class="prog-list">
-
-        <!-- Day 1 -->
-        <div class="prog-day-head gold">
-          17th May — Sunday
-          <div class="pdl"></div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">Evening</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">🌙 Reception Ceremony</div>
-            <div class="prog-sub">K J Mahal (A/C) · Dharmapuri</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold"></div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">🥂 Dinner & Celebration</div>
-            <div class="prog-sub">Grand reception feast</div>
-          </div>
-        </div>
-
-        <div class="prog-spacer"></div>
-
-        <!-- Day 2 -->
-        <div class="prog-day-head gold">
-          18th May — Monday
-          <div class="pdl"></div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">9:00 AM</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">🪔 Guest Arrival</div>
-            <div class="prog-sub">Infant Jesus Church, Selliyampatti</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">9:30 AM</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">💍 Wedding Ceremony</div>
-            <div class="prog-sub">Exchange of vows & rings</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">10:30 AM</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">💐 Garland Exchange</div>
-            <div class="prog-sub">Traditional Indian custom</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">11:00 AM</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">📸 Family Portraits</div>
-            <div class="prog-sub">Photography session</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">Noon</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">🎊 Marriage Functions</div>
-            <div class="prog-sub">K J Mahal · Traditional ceremonies</div>
-          </div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-time gold">1:30 PM</div>
-          <div class="prog-vl"></div>
-          <div>
-            <div class="prog-name">🍽️ Grand Wedding Feast</div>
-            <div class="prog-sub">K J Mahal · Multi-cuisine celebration</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- FAMILIES -->
-    <div class="s-panel" id="panel-details">
-
-      <p class="sub-italic" style="margin-bottom:16px; text-align:center;">
-        We are overjoyed to share this special day<br>with our beloved family &amp; friends.
-      </p>
-
-      <div class="fam-card">
-        <span class="fam-badge">Groom</span>
-        <div class="fam-name gold">Infant Selva</div>
-        <div class="fam-parent">
-          Son of Mr. A. Selvanathan<br>
-          &amp; Mrs. A. Stella Rani
-        </div>
-      </div>
-
-      <div class="fam-card" style="margin-bottom:16px;">
-        <span class="fam-badge">Bride</span>
-        <div class="fam-name gold">Jerline Rufina</div>
-        <div class="fam-parent">
-          Daughter of Mr. Jero<br>
-          &amp; Mrs. Celine Mary
-        </div>
-      </div>
-
-      <div class="sub-caps" style="margin-bottom:10px; text-align:center;">Share this invitation</div>
-      <div class="share-row">
-        <button class="share-btn" onclick="shareWhatsApp()">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.111 1.527 5.833L.057 24l6.348-1.484A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.644-.494-5.17-1.358l-.371-.22-3.769.881.897-3.668-.242-.381A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-          WhatsApp
-        </button>
-        <button class="share-btn" onclick="copyLink()">
-          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          Copy Link
-        </button>
-      </div>
-    </div>
-
-  </div><!-- /panels -->
-
-  <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">✦ ✦ ✦</div><div class="orn-r"></div></div>
-
-  <div class="quote-block">
-    <div class="quote-txt">"Your beautiful quote will go here."</div>
-    <div class="quote-auth">— Author</div>
-    <span class="year-script gold">2026</span>
-  </div>
-
-  <!-- ══ SAVE TO CALENDAR TRIGGER ══ -->
-  <button class="save-cal-trigger" onclick="openCalModal()">
-    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-    Save Events to Calendar
+<!-- ═══════════════════════════════════════════
+     SCREEN 2: BRIDE'S INVITATION
+═══════════════════════════════════════════ -->
+<div id="screen-bride" class="screen">
+  <button class="back-btn" onclick="goBack()">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back
   </button>
-
-</div><!-- /card -->
-</div><!-- /page -->
-
-<!-- ══ CALENDAR MODAL ══ -->
-<div class="cal-overlay" id="calOverlay" onclick="handleOverlayClick(event)">
-  <div class="cal-sheet" id="calSheet">
-    <div class="cal-sheet-handle"></div>
-    <div class="cal-sheet-title gold">Save to Your Calendar</div>
-    <div class="cal-sheet-sub">Choose which events to add</div>
-
-    <div class="cal-events">
-
-      <div class="cal-event">
-        <div class="cal-event-info">
-          <div class="cal-event-name gold">🌙 Reception Ceremony</div>
-          <div class="cal-event-date">17th May 2026 · Evening · K J Mahal</div>
-        </div>
-        <button class="cal-add-btn" onclick="addEvent('reception')">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Add
-        </button>
-      </div>
-
-      <div class="cal-event">
-        <div class="cal-event-info">
-          <div class="cal-event-name gold">💍 Wedding Ceremony</div>
-          <div class="cal-event-date">18th May 2026 · 9:00 AM · Church</div>
-        </div>
-        <button class="cal-add-btn" onclick="addEvent('wedding')">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Add
-        </button>
-      </div>
-
-      <div class="cal-event">
-        <div class="cal-event-info">
-          <div class="cal-event-name gold">🎊 Functions & Feast</div>
-          <div class="cal-event-date">18th May 2026 · Noon · K J Mahal</div>
-        </div>
-        <button class="cal-add-btn" onclick="addEvent('feast')">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Add
-        </button>
-      </div>
-
-      <div class="cal-event">
-        <div class="cal-event-info">
-          <div class="cal-event-name gold">✦ Add All Events</div>
-          <div class="cal-event-date">17–18th May · Both days together</div>
-        </div>
-        <button class="cal-add-btn" onclick="addEvent('all')">
-          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          Add All
-        </button>
-      </div>
-
+  <div class="page">
+    <div class="welcome-banner" id="bride-welcome">
+      ✦ &nbsp; Welcome! You are viewing the <strong>Bride's Family Invitation</strong> &nbsp; ✦
     </div>
+    <div class="card">
+      <div class="c-border"></div>
+      <div class="c-tl"></div><div class="c-tr"></div>
+      <div class="c-bl"></div><div class="c-br"></div>
+      <span class="name-1 gold">Jerline Rufina</span>
+      <span class="and-script gold">and</span>
+      <span class="name-2 gold">Infant Selva</span>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022; &#10022; &#10022;</div><div class="orn-r"></div></div>
+      <p class="sub-italic">
+        &ldquo;This is the Lord&rsquo;s doing and it is marvellous in our eyes.&rdquo;<br>
+        <span style="font-size:0.82em;opacity:0.75;">&#8212; Psalm 118:23</span>
+      </p>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <p class="sub-italic">
+        Mr. Viagula Jervillas .T &amp; Mrs. Celine Mary .A<br>
+        <span style="font-size:0.88em;opacity:0.85;">cordially request the honour of your esteemed presence<br>
+        at the Engagement, Reception &amp; Wedding celebrations<br>
+        of their beloved daughter</span>
+      </p>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <div class="dates-hero">
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">13</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Wednesday &middot; 10:30 AM &ndash; 11:30 AM</span>
+            <div class="day-title gold">Engagement Ceremony</div>
+            <span class="day-time">JMJ Grand Hall A/C &middot; Mittapudur, Salem</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">17</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Sunday &middot; 7:00 PM onwards</span>
+            <div class="day-title gold">Reception Ceremony</div>
+            <span class="day-time">KJ Mahal A/C &middot; Dharmapuri &ndash; 636 705</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">18</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Monday &middot; 9:15 AM &ndash; 10:30 AM</span>
+            <div class="day-title gold">Holy Matrimony</div>
+            <span class="day-time">Infant Jesus Church &middot; then KJ Mahal (Lunch 12:30 PM)</span>
+          </div>
+        </div>
+      </div>
+      <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('b-venues',this)">&#128205; Venues</button>
+        <button class="tab-btn" onclick="switchTab('b-programme',this)">&#128203; Schedule</button>
+        <button class="tab-btn" onclick="switchTab('b-details',this)">&#128106; Families</button>
+      </div>
+      <div class="section-panels">
+        <!-- VENUES -->
+        <div class="s-panel active" id="panel-b-venues">
+          <div class="venue-card">
+            <span class="venue-tag">13th May &middot; Wednesday &middot; 10:30 AM &ndash; 11:30 AM</span>
+            <div class="venue-title gold">JMJ Grand Hall A/C</div>
+            <div class="venue-addr-text">Engagement Ceremony<br>Saradha College Road, Convent Road,<br>Mittapudur, Salem.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/search/JMJ+Grand+Hall+Mittapudur+Salem" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=JMJ+Grand+Hall+Mittapudur+Salem&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">17th May &middot; Sunday &middot; 7:00 PM onwards</span>
+            <div class="venue-title gold">KJ Mahal A/C</div>
+            <div class="venue-addr-text">Reception Ceremony<br>Salem &ndash; Krishnagiri Bypass,<br>Dharmapuri &ndash; 636 705.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">18th May &middot; Monday &middot; 9:15 AM &ndash; 10:30 AM</span>
+            <div class="venue-title gold">Infant Jesus Church</div>
+            <div class="venue-addr-text">Holy Matrimony<br>Selliyampatti Parish,<br>Dharmapuri &ndash; 636 809.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/search/Infant+Jesus+Church+Selliyampatti+Dharmapuri" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=Infant+Jesus+Church+Selliyampatti+Dharmapuri&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">18th May &middot; After Church &middot; Lunch 12:30 PM onwards</span>
+            <div class="venue-title gold">KJ Mahal A/C</div>
+            <div class="venue-addr-text">Marriage Function &amp; Grand Feast<br>Salem &ndash; Krishnagiri Bypass,<br>Dharmapuri &ndash; 636 705.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+        </div>
+        <!-- SCHEDULE -->
+        <div class="s-panel" id="panel-b-programme">
+          <div class="prog-list">
+            <div class="prog-day-head gold">13th May &mdash; Wednesday <span style="font-style:italic;opacity:0.6;">(Engagement)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">10:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#128141; Engagement Ceremony</div><div class="prog-sub">JMJ Grand Hall A/C &middot; Saradha College Road, Mittapudur, Salem</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">11:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#127881; Engagement Concludes</div><div class="prog-sub">Blessings &amp; family gathering</div></div></div>
+            <div class="prog-spacer"></div>
+            <div class="prog-day-head gold">17th May &mdash; Sunday <span style="font-style:italic;opacity:0.6;">(Reception)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">7:00 PM</div><div class="prog-vl"></div><div><div class="prog-name">&#127769; Reception Ceremony</div><div class="prog-sub">KJ Mahal A/C &middot; Salem&ndash;Krishnagiri Bypass, Dharmapuri &ndash; 636 705</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">Onwards</div><div class="prog-vl"></div><div><div class="prog-name">&#127942; Dinner &amp; Celebration</div><div class="prog-sub">Grand reception feast with family &amp; friends</div></div></div>
+            <div class="prog-spacer"></div>
+            <div class="prog-day-head gold">18th May &mdash; Monday <span style="font-style:italic;opacity:0.6;">(Wedding Day)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">9:15 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#9962; Holy Matrimony</div><div class="prog-sub">Infant Jesus Church &middot; Selliyampatti Parish, Dharmapuri &ndash; 636 809</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">10:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#128141; Wedding Ceremony Concludes</div><div class="prog-sub">Exchange of vows, rings &amp; blessings</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">12:30 PM</div><div class="prog-vl"></div><div><div class="prog-name">&#127860; Marriage Function &amp; Grand Feast</div><div class="prog-sub">KJ Mahal A/C &middot; Salem&ndash;Krishnagiri Bypass, Dharmapuri &ndash; 636 705</div></div></div>
+          </div>
+        </div>
+        <!-- FAMILIES -->
+        <div class="s-panel" id="panel-b-details">
+          <p class="sub-italic" style="margin-bottom:16px;text-align:center;">We are overjoyed to share this blessed day<br>with our beloved family &amp; friends.</p>
+          <div class="fam-card"><span class="fam-badge">Bride</span><div class="fam-name gold">Er. Jerline Rufina V</div><div class="fam-parent">Daughter of<br><strong style="color:rgba(255,235,205,0.95);">Mr. Viagula Jervillas .T</strong><br>&amp; <strong style="color:rgba(255,235,205,0.95);">Mrs. Celine Mary .A</strong></div></div>
+          <div class="fam-card" style="margin-bottom:16px;"><span class="fam-badge">Groom</span><div class="fam-name gold">Er. Infant Selva S</div><div class="fam-parent">Son of<br><strong style="color:rgba(255,235,205,0.95);">Mr. Selvanathan .A</strong><br>&amp; <strong style="color:rgba(255,235,205,0.95);">Mrs. Stella Rani .A</strong></div></div>
+          <div class="sub-caps" style="margin-bottom:10px;text-align:center;">Share this invitation</div>
+          <div class="share-row">
+            <button class="share-btn" onclick="shareWA('bride')"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.111 1.527 5.833L.057 24l6.348-1.484A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.644-.494-5.17-1.358l-.371-.22-3.769.881.897-3.668-.242-.381A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>WhatsApp</button>
+            <button class="share-btn" onclick="copyLink()"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Copy Link</button>
+          </div>
+        </div>
+      </div>
+      <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">&#10022; &#10022; &#10022;</div><div class="orn-r"></div></div>
+      <div class="quote-block">
+        <div class="quote-txt">&ldquo;This is the Lord&rsquo;s doing and it is marvellous in our eyes.&rdquo;</div>
+        <div class="quote-auth">&mdash; Psalm 118:23</div>
+        <span class="year-script gold">2026</span>
+      </div>
+      <button class="save-cal-trigger" onclick="openCalModal('bride')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Save Events to Calendar</button>
+    </div>
+  </div>
+</div>
 
+<!-- ═══════════════════════════════════════════
+     SCREEN 3: GROOM'S INVITATION
+═══════════════════════════════════════════ -->
+<div id="screen-groom" class="screen">
+  <button class="back-btn" onclick="goBack()">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back
+  </button>
+  <div class="page">
+    <div class="welcome-banner">
+      ✦ &nbsp; Welcome! You are viewing the <strong>Groom's Family Invitation</strong> &nbsp; ✦
+    </div>
+    <div class="card">
+      <div class="c-border"></div>
+      <div class="c-tl"></div><div class="c-tr"></div>
+      <div class="c-bl"></div><div class="c-br"></div>
+      <span class="name-1 gold">Infant Selva</span>
+      <span class="and-script gold">and</span>
+      <span class="name-2 gold">Jerline Rufina</span>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022; &#10022; &#10022;</div><div class="orn-r"></div></div>
+      <p class="sub-italic">
+        &ldquo;This is the Lord&rsquo;s doing and it is marvellous in our eyes.&rdquo;<br>
+        <span style="font-size:0.82em;opacity:0.75;">&#8212; Psalm 118:23</span>
+      </p>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <p class="sub-italic">
+        Mr. Selvanathan .A &amp; Mrs. Stella Rani .A<br>
+        <span style="font-size:0.88em;opacity:0.85;">cordially request the honour of your esteemed presence<br>
+        at the Engagement, Reception &amp; Wedding celebrations<br>
+        of their beloved son</span>
+      </p>
+      <div class="orn"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <div class="dates-hero">
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">13</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Wednesday &middot; 10:30 AM &ndash; 11:30 AM</span>
+            <div class="day-title gold">Engagement Ceremony</div>
+            <span class="day-time">JMJ Grand Hall A/C &middot; Mittapudur, Salem</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">17</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Sunday &middot; 7:00 PM onwards</span>
+            <div class="day-title gold">Reception Ceremony</div>
+            <span class="day-time">KJ Mahal A/C &middot; Dharmapuri &ndash; 636 705</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num-col"><span class="day-num gold">18</span><span class="day-month">May</span></div>
+          <div class="day-info">
+            <span class="day-label">Monday &middot; 9:15 AM &ndash; 10:30 AM</span>
+            <div class="day-title gold">Holy Matrimony</div>
+            <span class="day-time">Infant Jesus Church &middot; then KJ Mahal (Lunch 12:30 PM)</span>
+          </div>
+        </div>
+      </div>
+      <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">&#10022;</div><div class="orn-r"></div></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('g-venues',this)">&#128205; Venues</button>
+        <button class="tab-btn" onclick="switchTab('g-programme',this)">&#128203; Schedule</button>
+        <button class="tab-btn" onclick="switchTab('g-details',this)">&#128106; Families</button>
+      </div>
+      <div class="section-panels">
+        <!-- VENUES -->
+        <div class="s-panel active" id="panel-g-venues">
+          <div class="venue-card">
+            <span class="venue-tag">13th May &middot; Wednesday &middot; 10:30 AM &ndash; 11:30 AM</span>
+            <div class="venue-title gold">JMJ Grand Hall A/C</div>
+            <div class="venue-addr-text">Engagement Ceremony<br>Saradha College Road, Convent Road,<br>Mittapudur, Salem.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/search/JMJ+Grand+Hall+Mittapudur+Salem" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=JMJ+Grand+Hall+Mittapudur+Salem&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">17th May &middot; Sunday &middot; 7:00 PM onwards</span>
+            <div class="venue-title gold">KJ Mahal A/C</div>
+            <div class="venue-addr-text">Reception Ceremony<br>Salem &ndash; Krishnagiri Bypass,<br>Dharmapuri &ndash; 636 705.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">18th May &middot; Monday &middot; 9:15 AM &ndash; 10:30 AM</span>
+            <div class="venue-title gold">Infant Jesus Church</div>
+            <div class="venue-addr-text">Holy Matrimony<br>Selliyampatti Parish,<br>Dharmapuri &ndash; 636 809.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/search/Infant+Jesus+Church+Selliyampatti+Dharmapuri" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=Infant+Jesus+Church+Selliyampatti+Dharmapuri&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+          <div class="venue-card">
+            <span class="venue-tag">18th May &middot; After Church &middot; Lunch 12:30 PM onwards</span>
+            <div class="venue-title gold">KJ Mahal A/C</div>
+            <div class="venue-addr-text">Marriage Function &amp; Grand Feast<br>Salem &ndash; Krishnagiri Bypass,<br>Dharmapuri &ndash; 636 705.</div>
+            <div style="display:flex;flex-wrap:wrap;">
+              <a class="map-btn" href="https://www.google.com/maps/place/K+J+MAHAL+(A%2FC)/@12.1240604,78.1332999,17z" target="_blank"><div class="pulse-ring"></div><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>View on Map &#8599;</a>
+              <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&destination=12.1240604,78.1332999&travelmode=driving" target="_blank" style="border-color:rgba(201,168,76,0.3);color:rgba(245,218,140,0.7);"><svg viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zM14 14.5V12h-4v3H8v-4a1 1 0 011-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>Directions &#8599;</a>
+            </div>
+          </div>
+        </div>
+        <!-- SCHEDULE -->
+        <div class="s-panel" id="panel-g-programme">
+          <div class="prog-list">
+            <div class="prog-day-head gold">13th May &mdash; Wednesday <span style="font-style:italic;opacity:0.6;">(Engagement)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">10:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#128141; Engagement Ceremony</div><div class="prog-sub">JMJ Grand Hall A/C &middot; Saradha College Road, Mittapudur, Salem</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">11:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#127881; Engagement Concludes</div><div class="prog-sub">Blessings &amp; family gathering</div></div></div>
+            <div class="prog-spacer"></div>
+            <div class="prog-day-head gold">17th May &mdash; Sunday <span style="font-style:italic;opacity:0.6;">(Reception)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">7:00 PM</div><div class="prog-vl"></div><div><div class="prog-name">&#127769; Reception Ceremony</div><div class="prog-sub">KJ Mahal A/C &middot; Salem&ndash;Krishnagiri Bypass, Dharmapuri &ndash; 636 705</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">Onwards</div><div class="prog-vl"></div><div><div class="prog-name">&#127942; Dinner &amp; Celebration</div><div class="prog-sub">Grand reception feast with family &amp; friends</div></div></div>
+            <div class="prog-spacer"></div>
+            <div class="prog-day-head gold">18th May &mdash; Monday <span style="font-style:italic;opacity:0.6;">(Wedding Day)</span><div class="pdl"></div></div>
+            <div class="prog-item"><div class="prog-time gold">9:15 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#9962; Holy Matrimony</div><div class="prog-sub">Infant Jesus Church &middot; Selliyampatti Parish, Dharmapuri &ndash; 636 809</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">10:30 AM</div><div class="prog-vl"></div><div><div class="prog-name">&#128141; Wedding Ceremony Concludes</div><div class="prog-sub">Exchange of vows, rings &amp; blessings</div></div></div>
+            <div class="prog-item"><div class="prog-time gold">12:30 PM</div><div class="prog-vl"></div><div><div class="prog-name">&#127860; Marriage Function &amp; Grand Feast</div><div class="prog-sub">KJ Mahal A/C &middot; Salem&ndash;Krishnagiri Bypass, Dharmapuri &ndash; 636 705</div></div></div>
+          </div>
+        </div>
+        <!-- FAMILIES -->
+        <div class="s-panel" id="panel-g-details">
+          <p class="sub-italic" style="margin-bottom:16px;text-align:center;">We are overjoyed to share this blessed day<br>with our beloved family &amp; friends.</p>
+          <div class="fam-card"><span class="fam-badge">Groom</span><div class="fam-name gold">Er. Infant Selva S</div><div class="fam-parent">Son of<br><strong style="color:rgba(255,235,205,0.95);">Mr. Selvanathan .A</strong><br>&amp; <strong style="color:rgba(255,235,205,0.95);">Mrs. Stella Rani .A</strong></div></div>
+          <div class="fam-card" style="margin-bottom:16px;"><span class="fam-badge">Bride</span><div class="fam-name gold">Er. Jerline Rufina V</div><div class="fam-parent">Daughter of<br><strong style="color:rgba(255,235,205,0.95);">Mr. Viagula Jervillas .T</strong><br>&amp; <strong style="color:rgba(255,235,205,0.95);">Mrs. Celine Mary .A</strong></div></div>
+          <div class="sub-caps" style="margin-bottom:10px;text-align:center;">Share this invitation</div>
+          <div class="share-row">
+            <button class="share-btn" onclick="shareWA('groom')"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.111 1.527 5.833L.057 24l6.348-1.484A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.644-.494-5.17-1.358l-.371-.22-3.769.881.897-3.668-.242-.381A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>WhatsApp</button>
+            <button class="share-btn" onclick="copyLink()"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Copy Link</button>
+          </div>
+        </div>
+      </div>
+      <div class="orn" style="margin:18px 0 0;"><div class="orn-l"></div><div class="orn-s">&#10022; &#10022; &#10022;</div><div class="orn-r"></div></div>
+      <div class="quote-block">
+        <div class="quote-txt">&ldquo;This is the Lord&rsquo;s doing and it is marvellous in our eyes.&rdquo;</div>
+        <div class="quote-auth">&mdash; Psalm 118:23</div>
+        <span class="year-script gold">2026</span>
+      </div>
+      <button class="save-cal-trigger" onclick="openCalModal('groom')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Save Events to Calendar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR MODAL -->
+<div class="cal-overlay" id="calOverlay" onclick="if(event.target===this)closeCalModal()">
+  <div class="cal-sheet">
+    <div class="cal-sheet-handle"></div>
+    <div class="cal-sheet-title gold">Save to Calendar</div>
+    <div class="cal-sheet-sub">Choose which events to add</div>
+    <div class="cal-events">
+      <div class="cal-event"><div class="cal-event-info"><div class="cal-event-name gold">&#128141; Engagement Ceremony</div><div class="cal-event-date">13th May 2026 &middot; 10:30 AM &middot; JMJ Grand Hall, Salem</div></div><button class="cal-add-btn" onclick="addEvent('engagement')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Add</button></div>
+      <div class="cal-event"><div class="cal-event-info"><div class="cal-event-name gold">&#127769; Reception Ceremony</div><div class="cal-event-date">17th May 2026 &middot; 7:00 PM &middot; KJ Mahal A/C, Dharmapuri</div></div><button class="cal-add-btn" onclick="addEvent('reception')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Add</button></div>
+      <div class="cal-event"><div class="cal-event-info"><div class="cal-event-name gold">&#9962; Holy Matrimony</div><div class="cal-event-date">18th May 2026 &middot; 9:15 AM &middot; Infant Jesus Church</div></div><button class="cal-add-btn" onclick="addEvent('wedding')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Add</button></div>
+      <div class="cal-event"><div class="cal-event-info"><div class="cal-event-name gold">&#127860; Grand Feast</div><div class="cal-event-date">18th May 2026 &middot; 12:30 PM &middot; KJ Mahal A/C, Dharmapuri</div></div><button class="cal-add-btn" onclick="addEvent('feast')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Add</button></div>
+      <div class="cal-event"><div class="cal-event-info"><div class="cal-event-name gold">&#10022; Add All Events</div><div class="cal-event-date">13th, 17th &amp; 18th May 2026</div></div><button class="cal-add-btn" onclick="addEvent('all')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Add All</button></div>
+    </div>
     <button class="cal-close-btn" onclick="closeCalModal()">Close</button>
   </div>
 </div>
 
 <script>
-/* ══ TWINKLING STARFIELD ══ */
-const canvas = document.getElementById('starfield');
-const ctx    = canvas.getContext('2d');
-let W, H, stars = [];
+/* ── Starfield ── */
+const canvas=document.getElementById("starfield"),ctx=canvas.getContext("2d");
+let W,H,stars=[];
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+function mkStars(){stars=[];const c=Math.floor(W*H/3800);for(let i=0;i<c;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:.3+Math.random()*1.1,base:.05+Math.random()*.55,range:.1+Math.random()*.45,speed:.0004+Math.random()*.0018,phase:Math.random()*Math.PI*2,gold:Math.random()>.62,bright:Math.random()>.94});}
+function drawStars(t){ctx.clearRect(0,0,W,H);for(const s of stars){const f=(Math.sin(t*s.speed*1000+s.phase)+1)/2,a=s.base+f*s.range;if(s.bright){const g=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*4);g.addColorStop(0,s.gold?`rgba(245,226,122,${a*.9})`:`rgba(255,255,255,${a*.85})`);g.addColorStop(1,"rgba(0,0,0,0)");ctx.beginPath();ctx.arc(s.x,s.y,s.r*4,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();}ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.gold?`rgba(245,220,110,${a})`:`rgba(255,255,255,${a*.75})`;ctx.fill();}requestAnimationFrame(drawStars);}
+resize();mkStars();window.addEventListener("resize",()=>{resize();mkStars();});requestAnimationFrame(drawStars);
 
-function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+/* ── Floating petals ── */
+const petalContainer=document.getElementById("petals");
+const sym=['🌸','✿','❀','🌹','✦'];
+for(let i=0;i<20;i++){const p=document.createElement("div");p.className="petal";p.textContent=sym[Math.floor(Math.random()*sym.length)];p.style.left=Math.random()*100+"vw";p.style.animationDuration=(9+Math.random()*11)+"s";p.style.animationDelay=(Math.random()*14)+"s";p.style.fontSize=(0.7+Math.random()*0.9)+"rem";petalContainer.appendChild(p);}
 
-function mkStars() {
-  stars = [];
-  const count = Math.floor((W * H) / 3800);
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random()*W, y: Math.random()*H,
-      r: 0.3 + Math.random()*1.1,
-      base: 0.05 + Math.random()*0.55,
-      range: 0.1 + Math.random()*0.45,
-      speed: 0.0004 + Math.random()*0.0018,
-      phase: Math.random()*Math.PI*2,
-      gold: Math.random() > 0.62,
-      bright: Math.random() > 0.94
-    });
-  }
+/* ── Screen navigation ── */
+let currentScreen = 'landing';
+function showInvite(side) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+side).classList.add('active');
+  currentScreen = side;
+  window.scrollTo(0,0);
+  // Reset card tilt on new screen
+  const card = document.querySelector('#screen-'+side+' .card');
+  if(card) card.style.transform='';
+}
+function goBack() {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-landing').classList.add('active');
+  currentScreen = 'landing';
+  window.scrollTo(0,0);
 }
 
-function drawStars(t) {
-  ctx.clearRect(0, 0, W, H);
-  for (const s of stars) {
-    const flicker = (Math.sin(t * s.speed * 1000 + s.phase) + 1) / 2;
-    const alpha   = s.base + flicker * s.range;
-    if (s.bright) {
-      const gr = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 4);
-      gr.addColorStop(0, s.gold ? `rgba(245,226,122,${alpha*.9})` : `rgba(255,255,255,${alpha*.85})`);
-      gr.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.beginPath(); ctx.arc(s.x, s.y, s.r*4, 0, Math.PI*2);
-      ctx.fillStyle = gr; ctx.fill();
-    }
-    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-    ctx.fillStyle = s.gold ? `rgba(245,220,110,${alpha})` : `rgba(255,255,255,${alpha*.75})`;
-    ctx.fill();
-  }
-  requestAnimationFrame(drawStars);
-}
-resize(); mkStars();
-window.addEventListener('resize', () => { resize(); mkStars(); });
-requestAnimationFrame(drawStars);
+/* ── URL param support: ?side=bride or ?side=groom ── */
+(function(){
+  const p=new URLSearchParams(location.search).get('side');
+  if(p==='bride'||p==='groom') showInvite(p);
+})();
 
-/* ══ TABS ══ */
-function switchTab(name, btn) {
-  document.querySelectorAll('.s-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  btn.classList.add('active');
+/* ── Tabs ── */
+function switchTab(n,b){
+  // find parent .section-panels
+  const panels = b.closest('.card').querySelectorAll('.s-panel');
+  const buttons = b.closest('.tabs').querySelectorAll('.tab-btn');
+  panels.forEach(p=>p.classList.remove('active'));
+  buttons.forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  b.classList.add('active');
 }
 
-/* ══ CALENDAR MODAL ══ */
-function openCalModal() {
-  document.getElementById('calOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeCalModal() {
-  document.getElementById('calOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('calOverlay')) closeCalModal();
-}
-
-/* ══ ADD INDIVIDUAL EVENTS ══ */
-const GCal = (title, start, end, loc, desc) => {
-  const t = encodeURIComponent(title);
-  const l = encodeURIComponent(loc);
-  const d = encodeURIComponent(desc);
-  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=${start}/${end}&location=${l}&details=${d}`, '_blank');
-};
-
-function addEvent(type) {
-  const name = 'Infant Selva & Jerline Rufina Wedding';
-  if (type === 'reception') {
-    GCal(
-      `${name} — Reception`,
-      '20260517T180000', '20260517T220000',
-      'K J Mahal (A/C), Dharmapuri, Tamil Nadu',
-      'Reception ceremony for the wedding of Infant Selva & Jerline Rufina.'
-    );
-    showToast('Reception added to Calendar ✦');
-  } else if (type === 'wedding') {
-    GCal(
-      `${name} — Church Ceremony`,
-      '20260518T090000', '20260518T113000',
-      'Infant Jesus Church, Selliyampatti Parish, Dharmapuri',
-      'Wedding ceremony — exchange of vows & rings.'
-    );
-    showToast('Wedding ceremony added ✦');
-  } else if (type === 'feast') {
-    GCal(
-      `${name} — Functions & Feast`,
-      '20260518T120000', '20260518T150000',
-      'K J Mahal (A/C), Dharmapuri, Tamil Nadu',
-      'Marriage functions, garland exchange & grand wedding feast.'
-    );
-    showToast('Functions & Feast added ✦');
-  } else if (type === 'all') {
-    GCal(
-      `${name} — Full Celebration (17–18 May)`,
-      '20260517T180000', '20260518T150000',
-      'K J Mahal (A/C) & Infant Jesus Church, Dharmapuri',
-      'Day 1: Reception at K J Mahal (17 May evening). Day 2: Church wedding 9 AM, followed by functions & feast at K J Mahal (18 May).'
-    );
-    showToast('All events added to Calendar ✦');
-  }
+/* ── Calendar ── */
+let calSide = 'bride';
+function openCalModal(side){ calSide=side; document.getElementById("calOverlay").classList.add("open"); document.body.style.overflow="hidden"; }
+function closeCalModal(){ document.getElementById("calOverlay").classList.remove("open"); document.body.style.overflow=""; }
+const GCal=(t,s,e,l,d)=>window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(t)}&dates=${s}/${e}&location=${encodeURIComponent(l)}&details=${encodeURIComponent(d)}`,"_blank");
+function addEvent(type){
+  const n = calSide==='bride' ? "Jerline Rufina & Infant Selva" : "Infant Selva & Jerline Rufina";
+  if(type==="engagement") GCal(n+" - Engagement","20260513T103000","20260513T113000","JMJ Grand Hall A/C, Mittapudur, Salem","Engagement ceremony. 10:30 AM to 11:30 AM.");
+  else if(type==="reception") GCal(n+" - Reception","20260517T190000","20260517T230000","KJ Mahal A/C, Dharmapuri - 636 705","Reception ceremony. 7:00 PM onwards.");
+  else if(type==="wedding") GCal(n+" - Holy Matrimony","20260518T091500","20260518T103000","Infant Jesus Church, Selliyampatti Parish, Dharmapuri - 636 809","Holy Matrimony. 9:15 AM to 10:30 AM.");
+  else if(type==="feast") GCal(n+" - Grand Feast","20260518T123000","20260518T150000","KJ Mahal A/C, Dharmapuri - 636 705","Marriage Function & Grand Feast. Lunch 12:30 PM onwards.");
+  else if(type==="all"){GCal(n+" - Engagement","20260513T103000","20260513T113000","JMJ Grand Hall A/C, Mittapudur, Salem","Engagement ceremony.");GCal(n+" - Reception","20260517T190000","20260517T230000","KJ Mahal A/C, Dharmapuri","Reception ceremony.");GCal(n+" - Holy Matrimony","20260518T091500","20260518T103000","Infant Jesus Church, Dharmapuri","Holy Matrimony.");GCal(n+" - Grand Feast","20260518T123000","20260518T150000","KJ Mahal A/C, Dharmapuri","Grand Feast.");}
+  showToast("Added to Calendar ✦");
 }
 
-/* ══ SHARE ══ */
-function shareWhatsApp() {
-  const msg = encodeURIComponent(
-    "🌹 *You're Invited!*\n\n*Infant Selva & Jerline Rufina*\n\n" +
-    "We joyfully invite you to celebrate our wedding!\n\n" +
-    "📅 *Day 1 — 17th May 2026 (Evening)*\n🎉 Reception · K J Mahal (A/C), Dharmapuri\n\n" +
-    "📅 *Day 2 — 18th May 2026 · 9:00 AM*\n⛪ Our Wedding · Infant Jesus Church, Selliyampatti\n" +
-    "🎊 Functions & Feast · K J Mahal, Dharmapuri\n\nWe would love your presence & blessings! ✨"
-  );
-  window.open('https://wa.me/?text=' + msg, '_blank');
+/* ── Share ── */
+function shareWA(side){
+  const isBride = side==='bride';
+  const msg = isBride
+    ? "🌹 *You're Invited!*\n\n*Jerline Rufina & Infant Selva*\n*Wedding Celebrations 2026*\n\nMr. Viagula Jervillas .T & Mrs. Celine Mary .A\ncordially invite you to their daughter's celebrations!\n\n📅 *13th May · 10:30 AM*\n💍 Engagement · JMJ Grand Hall A/C, Salem\n\n📅 *17th May · 7:00 PM*\n🌙 Reception · KJ Mahal A/C, Dharmapuri\n\n📅 *18th May · 9:15 AM*\n⛪ Holy Matrimony · Infant Jesus Church, Dharmapuri\n🍽 Grand Feast · 12:30 PM · KJ Mahal A/C\n\n✨ With best compliments from Family, Friends & Relatives"
+    : "🌹 *You're Invited!*\n\n*Infant Selva & Jerline Rufina*\n*Wedding Celebrations 2026*\n\nMr. Selvanathan .A & Mrs. Stella Rani .A\ncordially invite you to their son's celebrations!\n\n📅 *13th May · 10:30 AM*\n💍 Engagement · JMJ Grand Hall A/C, Salem\n\n📅 *17th May · 7:00 PM*\n🌙 Reception · KJ Mahal A/C, Dharmapuri\n\n📅 *18th May · 9:15 AM*\n⛪ Holy Matrimony · Infant Jesus Church, Dharmapuri\n🍽 Grand Feast · 12:30 PM · KJ Mahal A/C\n\n✨ With best compliments from Family, Friends & Relatives";
+  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank");
 }
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href)
-    .then(() => showToast('Invitation link copied ✦'))
-    .catch(() => showToast('Copy the URL from your browser'));
+function copyLink(){
+  const url = window.location.origin+window.location.pathname+'?side='+currentScreen;
+  navigator.clipboard.writeText(url).then(()=>showToast("Link copied ✦")).catch(()=>showToast("Copy the URL from your browser"));
 }
+function showToast(msg){const t=document.getElementById("toast");t.innerHTML=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);}
 
-/* ══ TOAST ══ */
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-/* ══ 3D TILT ══ */
-const card = document.querySelector('.card');
-card.style.transition = 'transform 0.5s ease';
-document.addEventListener('mousemove', e => {
-  const dx = (e.clientX - innerWidth/2) / innerWidth;
-  const dy = (e.clientY - innerHeight/2) / innerHeight;
-  card.style.transform = `perspective(1200px) rotateY(${dx*3}deg) rotateX(${-dy*2}deg)`;
+/* ── Card tilt on mouse move ── */
+document.addEventListener("mousemove",e=>{
+  const card=document.querySelector('.screen.active .card');
+  if(!card)return;
+  const dx=(e.clientX-innerWidth/2)/innerWidth,dy=(e.clientY-innerHeight/2)/innerHeight;
+  card.style.transform=`perspective(1200px) rotateY(${dx*3}deg) rotateX(${-dy*2}deg)`;
 });
-document.addEventListener('mouseleave', () => {
-  card.style.transform = 'perspective(1200px) rotateY(0) rotateX(0)';
+document.addEventListener("mouseleave",()=>{
+  const card=document.querySelector('.screen.active .card');
+  if(card)card.style.transform="perspective(1200px) rotateY(0) rotateX(0)";
 });
 </script>
 </body>
