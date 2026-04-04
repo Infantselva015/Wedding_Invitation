@@ -45,7 +45,7 @@ jobs:
         run: |
           mkdir -p _site/bride-side _site/groom-side
 
-          # Main (original) invite at root
+          # Main (combined) invite at root
           cp index.html _site/index.html
 
           # Bride-side invite
@@ -54,51 +54,10 @@ jobs:
           # Groom-side invite
           cp groom-temp/index.html _site/groom-side/index.html
 
-          # Landing page
-          cat > _site/home.html << 'LANDING'
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jerline Rufina & Infant Selva — Wedding 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@1,400&family=Great+Vibes&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{min-height:100vh;background:#0E0205;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;font-family:'Cormorant Garamond',serif;}
-h1{font-family:'Great Vibes',cursive;font-size:clamp(2rem,8vw,3.5rem);background:linear-gradient(90deg,#8B6010,#C9A84C,#F5E27A,#C9A84C,#8B6010);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:8px;}
-.sub{font-style:italic;color:rgba(255,210,175,0.7);font-size:1rem;text-align:center;margin-bottom:8px;letter-spacing:0.05em;}
-.date{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(201,168,76,0.7);text-align:center;margin-bottom:40px;}
-.links{display:flex;flex-direction:column;gap:14px;width:100%;max-width:380px;}
-a{display:block;padding:18px 24px;border:1px solid rgba(201,168,76,0.4);background:rgba(255,255,255,0.03);text-decoration:none;text-align:center;transition:all 0.3s;}
-a:hover{border-color:rgba(201,168,76,0.8);background:rgba(201,168,76,0.08);}
-.lbl{font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,226,122,0.95);}
-.sub2{font-style:italic;font-size:0.85rem;color:rgba(255,210,175,0.6);margin-top:5px;}
-</style>
-</head>
-<body>
-  <h1>Jerline &amp; Infant Selva</h1>
-  <p class="sub">13th &bull; 17th &bull; 18th May 2026</p>
-  <p class="date">Select your invitation</p>
-  <div class="links">
-    <a href="bride-side/index.html">
-      <div class="lbl">&#10022; Bride&rsquo;s Family Invitation</div>
-      <div class="sub2">Mr. Viagula Jervillas .T &amp; Mrs. Celine Mary .A</div>
-    </a>
-    <a href="groom-side/index.html">
-      <div class="lbl">&#10022; Groom&rsquo;s Family Invitation</div>
-      <div class="sub2">Mr. Selvanathan .A &amp; Mrs. Stella Rani .A</div>
-    </a>
-    <a href="index.html">
-      <div class="lbl">&#10022; Combined Invitation</div>
-      <div class="sub2">For all guests</div>
-    </a>
-  </div>
-</body>
-</html>
-LANDING
+          # Landing page - copied from repo file (no inline HTML in YAML!)
+          cp home.html _site/home.html
 
-          echo "Built:"
+          echo "Built site structure:"
           find _site -type f
 
       - name: Upload Pages artifact
