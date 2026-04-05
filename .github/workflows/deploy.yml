@@ -1,11 +1,8 @@
-name: Deploy Wedding Invitations to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - bride-invitation
-      - groom-invitation
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,64 +11,20 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Checkout bride-invitation branch
-        uses: actions/checkout@v4
-        with:
-          ref: bride-invitation
-          path: bride-temp
-
-      - name: Checkout groom-invitation branch
-        uses: actions/checkout@v4
-        with:
-          ref: groom-invitation
-          path: groom-temp
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build site
-        run: |
-          mkdir -p _site/bride-side _site/groom-side
-
-          # Main (combined) invite at root
-          cp index.html _site/index.html
-
-          # Bride-side invite
-          cp bride-temp/index.html _site/bride-side/index.html
-
-          # Groom-side invite
-          cp groom-temp/index.html _site/groom-side/index.html
-
-          # Landing page - copied from repo file (no inline HTML in YAML!)
-          cp home.html _site/home.html
-
-          echo "Built site structure:"
-          find _site -type f
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - uses: actions/deploy-pages@v4
+        id: deploy
